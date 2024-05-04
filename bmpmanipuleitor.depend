@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1712571230 source:/home/ezequiel/Progra/BMP/bmpmanipuleitor/main.c
+	<stdio.h>
+	"funciones_estudiante.h"
+	"funciones_docente.h"
+	"constantes.h"
+
+1712621035 /home/ezequiel/Progra/BMP/bmpmanipuleitor/funciones_docente.h
+	"estructuras.h"
+
+1712621994 source:/home/ezequiel/Progra/BMP/bmpmanipuleitor/funciones_docente.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"estructuras.h"
+	"constantes.h"
+	"funciones_docente.h"
+
+1712539850 source:/home/ezequiel/Progra/BMP/bmpmanipuleitor/funciones_estudiante.c
+
+1712539559 /home/ezequiel/Progra/BMP/bmpmanipuleitor/funciones_estudiante.h
+
+1712591837 /home/ezequiel/Progra/BMP/bmpmanipuleitor/estructuras.h
+
+1712541473 /home/ezequiel/Progra/BMP/bmpmanipuleitor/constantes.h
+
+1713008534 source:c:\users\obonachera\documents\universidad\topicos-programacion\otros\tp\main.c
+	<stdio.h>
+	"funciones_estudiante.h"
+	"constantes.h"
+
+1714498403 c:\users\obonachera\documents\universidad\topicos-programacion\otros\tp\funciones_estudiante.h
+	"constantes.h"
+	"estructuras.h"
+
+1712559474 c:\users\obonachera\documents\universidad\topicos-programacion\otros\tp\constantes.h
+
+1714498583 source:c:\users\obonachera\documents\universidad\topicos-programacion\otros\tp\funciones_estudiante.c
+	"constantes.h"
+	"estructuras.h"
+	<stdlib.h>
+	<stdio.h>
+
+1712690694 c:\users\obonachera\documents\universidad\topicos-programacion\otros\tp\estructuras.h
+
+1714658152 source:c:\users\orneb\onedrive\documentos\topicos-programacion-main\otros\tp\main.c
+	<stdio.h>
+	"funciones_estudiante.h"
+	"constantes.h"
+
+1714739079 c:\users\orneb\onedrive\documentos\topicos-programacion-main\otros\tp\funciones_estudiante.h
+	"constantes.h"
+	"estructuras.h"
+
+1714738553 c:\users\orneb\onedrive\documentos\topicos-programacion-main\otros\tp\constantes.h
+
+1714739122 c:\users\orneb\onedrive\documentos\topicos-programacion-main\otros\tp\estructuras.h
+
+1714740020 source:c:\users\orneb\onedrive\documentos\topicos-programacion-main\otros\tp\funciones_estudiante.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"constantes.h"
+	"estructuras.h"
+	"funciones_estudiante.h"
+
