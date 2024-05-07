@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="unlam.bmp --negativo --escala-de-grises" />
+				<Option parameters="unlam.bmp --negativo --escala-de-grises --invertir-colores --reducir-contraste --aumentar-contraste --tonalidad-verde" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

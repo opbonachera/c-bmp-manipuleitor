@@ -5,12 +5,12 @@
     Apellido: Bonachera
     Nombre: Ornella
     DNI: 46119546
-    Entrega:
+    Entrega: Si
     -----------------
     Apellido: Pityla
     Nombre: Damian
-    DNI:
-    Entrega:
+    DNI: 45754471
+    Entrega: Si
     -----------------
     (Sólo para grupos de tres integrantes)
     Apellido:
@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h> // Para time()
 
 #include "constantes.h"
 #include "estructuras.h"
@@ -47,78 +48,63 @@ int solucion(int argc, char* argv[])
 
 int crearImagen(int argc, char *argv[])
 {
-    t_metadata cabeceraNuevo, cabeceraOriginal;
+    // Crea la nueva imagen en formato BMP de 24 bits.
+    t_metadata metadataNuevo, metadataOriginal;
 
     char nombreImgOriginal[256], nombreImgNueva[256];
     int pos, argCod;
 
     pos = posicionBmp(argc, argv);
-    // Devuelve la posicion del archivo bmp en caso de ser encontrado, -1 si hay mas de un archivo y 0 si no encuentra ninguno
+
     if(pos==-1)
     {
-        printf("Existe mas de un archivo BMP");
+        printf("No se puede ingresar mas de un archivo BMP. Para saber como utilizar el programa, ingrese --help.");
         return 1;
     }else if(pos==0)
     {
         printf("No se encontro ningun archivo BMP");
-        return 1;
+        return ARCHIVO_NO_ENCONTRADO;
     }
+
     nombreImgOriginal[0] = '\0';
     strcpy(nombreImgOriginal, argv[pos]);
-    //Copia el nombre del archivo en la variable nombreImgOriginal
-    printf("\n Nombre del archivo: (%s)\n", nombreImgOriginal);
-
-    for(int j=0; j<argc; j++)
-    {
-        printf("Argumento: (%s)",argv[j]);
-    }
 
     for(int i=1; i<argc; i++)
-    // Corremos el proceso tantas veces como comandos con filtros aparezcan
     {
-        // printf("Entro aca\n");
-        // printf("i %d pos %d\n", i, pos);
         if(i!=pos){
-            // printf("aaaaaaaaa");
             argCod = validarDevolverCodigo(argv[i]);
-            printf("(%d)", argCod);
-            // Valida si el comando a ejecutar es valido
         if(argCod==-1)
-            printf("Argumento numero: %d no existente\n", i);
+            printf("Funcionalidad: %d no existente. Para ver las funcionalidades disponibles, ingrese --help.", i);
         else
         {
-            printf("Entro aca");
             eliminarPrimerosDosCaracteres(argv[i]);
-
             nombreImgNueva[0] = '\0';
-
             strcat(nombreImgNueva,"estudiante_");
             strcat(nombreImgNueva,argv[i]);
             strcat(nombreImgNueva,".bmp");
-            // Crea el nombre del archivo que corresponde y lo guardaen la variable nombreImgNueva
-            printf("\n Nombre del archivo: %s \n", nombreImgNueva);
 
             FILE *pImagenNueva = fopen(nombreImgNueva, "wb");
-            // Crea el archivo de la imagen nueva
+
             if(pImagenNueva== NULL) {
-                printf("Error al abrir el archivo de salida");
+                printf("Ocurrió un error al abrir el archivo de salida. Intente nevamente.");
                 return -3;
             }
 
-            leerCabecera(nombreImgOriginal, &cabeceraOriginal);
-            // Guardamos la cabecera de la imagen original solo por si debemos hacerle modificaciones
-            escribirCabecera(pImagenNueva, nombreImgOriginal);
-            // Escribimos la cabecera en la imagen nueva
-            escribirDatos(pImagenNueva, nombreImgOriginal, argCod);
+            leerMetadata(nombreImgOriginal, &metadataOriginal);
+
+            // Guardamos la metadata de la imagen original solo por si debemos hacerle modificaciones
+            escribirMetadata(pImagenNueva, nombreImgOriginal, metadataOriginal.comienzoImagen);
+            // Escribimos la metadata en la imagen nueva
+            escribirDatos(pImagenNueva, nombreImgOriginal, argCod, metadataOriginal.comienzoImagen, &metadataNuevo, &metadataOriginal);
             // Escribimos los pixeles de la imagen original en la nueva
-            leerCabecera(nombreImgNueva, &cabeceraNuevo);
+            leerMetadata(nombreImgNueva, &metadataNuevo);
             // Leemos la cebcera de la imagen nueva
 
             fclose(pImagenNueva);
         }
       }
     }
-    return 0;
+    return TODO_OK;
 }
 
 int posicionBmp(const int argc, char *argv[])
@@ -127,17 +113,14 @@ int posicionBmp(const int argc, char *argv[])
     char *extension;
     for (int i = 1; i < argc; i++) {
 
-        // Verificar si el argumento termina con ".bmp" usando strrchr
-        // strrchr devuelve un puntero a la última aparición de un carácter en una cadena
-        // Aquí estamos buscando la última aparición de "." en el argumento
         extension = strrchr(argv[i], '.');
 
-        // Si encontramos una extensión y es ".bmp", regresamos 1
         if (extension != NULL && strcmp(extension, ".bmp") == 0) {
             encontrado = i;
             cant++;
         }
     }
+
     if(cant > 1) encontrado =-1;
     return encontrado;
 }
@@ -152,10 +135,11 @@ int validarDevolverCodigo(char arg[]){
     if(!strcmpi(arg, "--tonalidad-azul")) return 5;
     if(!strcmpi(arg, "--tonalidad-verde")) return 6;
     if(!strcmpi(arg, "--tonalidad-roja")) return 7;
-    // Opciones de modificar dimensiones (Modifica dimensiones)
-    if(!strcmpi(arg, "--recortar-imagen")) return 8;
-    if(!strcmpi(arg, "--rotar-derecha")) return 9;
-    if(!strcmpi(arg, "--rotar-izquierda")) return 9;
+    if(!strcmpi(arg, "--comodin")) return 9;
+    // Opciones de modificar dimensiones
+    if(!strcmpi(arg, "--rotar-derecha")) return 10;
+    if(!strcmpi(arg, "--rotar-izquierda")) return 11;
+    if(!strcmpi(arg, "--recortar")) return 12;
 
     return -1;
 }
@@ -186,15 +170,12 @@ int aplicarFiltro(t_pixel* px, int codFiltro, int min_value, int max_value)
         case 7:
             aumentarColor(px,2);
             break;
-        case 8:
         case 9:
-        case 10:
-            printf("Estamos trabajando en esta funcionalidad.");
-            break;
+            aumentarColorAleatorio(px);
         default:
             return 1;
     }
-    return 0;
+    return TODO_OK;
 }
 
 void eliminarPrimerosDosCaracteres(char *cadena) {
@@ -206,9 +187,9 @@ void eliminarPrimerosDosCaracteres(char *cadena) {
     }
 }
 
-int escribirCabecera(FILE *archivoNuevo, char nombreImgOriginal[])
+int escribirMetadata(FILE *archivoNuevo, char nombreImgOriginal[], unsigned int comienzoImagen)
 {
-    // Copia TODOS los datos de la cabecera del archivo original al nuevo
+    // Copia TODOS los datos de la metadata del archivo original al nuevo
     FILE *archivoOriginal;
 
     archivoOriginal = fopen(nombreImgOriginal,"rb");
@@ -220,122 +201,108 @@ int escribirCabecera(FILE *archivoNuevo, char nombreImgOriginal[])
 
     unsigned char byte[3];
 
-    printf("Escribiendo cabecera...\n");
-    for(int i=0; i<54;i++){
+    for(int i=0; i<comienzoImagen;i++){
         fread(&byte, sizeof(unsigned char), 1, archivoOriginal);
         fwrite(&byte, sizeof(unsigned char), 1, archivoNuevo);
     }
-    printf("Cabecera escrita correctamente.\n");
+
     fclose(archivoOriginal);
 
-    return 0;
+    return TODO_OK;
 }
 
-int escribirDatos(FILE *archivoNuevo, char nombreImgOriginal[], int argCod)
+int escribirDatos(FILE *archivoNuevo, char nombreImgOriginal[], int argCod, unsigned int comienzoImagen, t_metadata *metadata_entrada, t_metadata *metadata_salida)
 {
     // Escribe los pixeles que componen la imagen
+    FILE *archivoOriginal;
+
     t_pixel px;
 
     unsigned char min_value = 255;
     unsigned char max_value = 0;
 
-    FILE *archivoOriginal;
-
     archivoOriginal = fopen(nombreImgOriginal,"rb");
 
     if (archivoOriginal == NULL || archivoNuevo == NULL) {
-        perror("Error opening file");
+        perror("Ocurrio un error. Intente nuevamente.\n");
         return 1;
     }
 
-    fseek(archivoOriginal, 54, SEEK_SET);
-    fseek(archivoNuevo, 54, SEEK_SET);
+    fseek(archivoOriginal, comienzoImagen, SEEK_SET);
+    fseek(archivoNuevo, comienzoImagen, SEEK_SET);
 
-
-
-    while(fread(&px.pixel, sizeof(unsigned char), 3, archivoOriginal))
+    if(argCod==12)
+        recortar(archivoOriginal, archivoNuevo, metadata_entrada, metadata_salida);
+    else if(argCod == 11 || argCod==10)
+        rotarImagen(archivoOriginal, archivoNuevo, metadata_entrada, metadata_salida, argCod);
+    else
     {
-        if(argCod<3){
-        // Los codigos 1 y 2 corresponden a la modificacion de contraste para lo cual necesitamos los valores maximos y minimos de cada px
-            for (int i = 0; i < 3; i++)
+        while(fread(&px.pixel, sizeof(unsigned char), 3, archivoOriginal))
+        {
+            if(argCod<3)
             {
-                if (px.pixel[i] < min_value) { min_value = MIN(px.pixel[i], min_value); }
-                if (px.pixel[i] > max_value) { max_value = MAX(px.pixel[i], min_value); }
+                // Los codigos 1 y 2 corresponden a la modificacion de contraste para lo cual necesitamos los valores maximos y minimos de cada px
+                for (int i = 0; i < 3; i++)
+                {
+                    if (px.pixel[i] < min_value)
+                        min_value = MIN(px.pixel[i], min_value);
+                    if (px.pixel[i] > max_value)
+                        max_value = MAX(px.pixel[i], min_value);
+                }
             }
-        }
 
-        aplicarFiltro(&px, argCod, min_value, max_value);
-        fwrite(&px.pixel, sizeof(unsigned char), 3, archivoNuevo);
+            aplicarFiltro(&px, argCod, min_value, max_value);
+            fwrite(&px.pixel, sizeof(unsigned char), 3, archivoNuevo);
+        }
     }
 
     fclose(archivoOriginal);
 
-    return 0;
+    return TODO_OK;
 }
 
-int leerCabecera(char file[], t_metadata *cabecera)
+int leerMetadata(char file[], t_metadata *metadata)
 {
+    // Lee la metadata de la imagen obtenida
     FILE *img;
 
     img = fopen(file,"rb");
 
-    printf("\n\n--------");
-    printf("Filename: %s\n",file);
-
     fseek(img, 2, SEEK_SET);
-    fread(&cabecera->tamArchivo, sizeof(unsigned int), 1, img);
+    fread(&metadata->tamArchivo, sizeof(unsigned int), 1, img);
 
     fseek(img, 14, SEEK_SET);
-    fread(&cabecera->tamEncabezado, sizeof(unsigned int), 1, img);
+    fread(&metadata->tamEncabezado, sizeof(unsigned int), 1, img);
 
     fseek(img, 10, SEEK_SET);
-    fread(&cabecera->comienzoImagen, sizeof(unsigned int), 1, img);
+    fread(&metadata->comienzoImagen, sizeof(unsigned int), 1, img);
 
     fseek(img, 18, SEEK_SET);
-    fread(&cabecera->ancho, sizeof(unsigned int), 1, img);
-
+    fread(&metadata->ancho, sizeof(unsigned int), 1, img);
     fseek(img, 22, SEEK_SET);
-    fread(&cabecera->alto, sizeof(unsigned int), 1, img);
+    fread(&metadata->alto, sizeof(unsigned int), 1, img);
 
     fseek(img, 28, SEEK_SET);
-    fread(&cabecera->profundidad, sizeof(unsigned short), 1, img);
-
-    printf("Tamaño de archivo: %u bytes\n", cabecera->tamArchivo);
-    printf("Tamaño de cabecera: %u bytes\n", cabecera->tamEncabezado);
-    printf("Alto: %u bytes\n", cabecera->alto);
-    printf("Ancho: %u bytes\n", cabecera->ancho);
-    printf("Comienzo de imagen: byte %u\n", cabecera->comienzoImagen);
-    printf("Profundidad: %u bits\n", cabecera->profundidad);
+    fread(&metadata->profundidad, sizeof(unsigned short), 1, img);
 
     fclose(img);
-    return 0;
-}
-
-int modificarDimensiones(FILE *file, unsigned int w, unsigned int h)
-{
-    fseek(file, 18, SEEK_SET);
-    fwrite(&w, sizeof(unsigned int), 1, file);
-
-    fseek(file, 22, SEEK_SET);
-    fwrite(&h, sizeof(unsigned int), 1, file);
-
-    return 0;
+    return TODO_OK;
 }
 
 void invertirColores(t_pixel *px)
 {
-    px->pixel[0] = (unsigned char)(~px->pixel[0]);
-    px->pixel[1] = (unsigned char)(~px->pixel[1]);
-    px->pixel[2] = (unsigned char)(~px->pixel[2]);
+    px->pixel[0] = MIN(255,(~px->pixel[0]));
+    px->pixel[1] = MIN(255,(~px->pixel[1]));
+    px->pixel[2] = MIN(255,(~px->pixel[2]));
 }
 
 void escalaDeGrises(t_pixel *px)
 {
-    float promedio = ((px->pixel[0] + px->pixel[1] + px->pixel[2]) / 3);
+    float promedio = MIN(255,((px->pixel[0] + px->pixel[1] + px->pixel[2]) / 3));
 
-    px->pixel[0] = (unsigned char)(promedio);
-    px->pixel[1] = (unsigned char)(promedio);
-    px->pixel[2] = (unsigned char)(promedio);
+    px->pixel[0] = (promedio);
+    px->pixel[1] = (promedio);
+    px->pixel[2] = (promedio);
 }
 
 void aumentarContraste(t_pixel *px, int min, int max) {
@@ -363,6 +330,34 @@ void aumentarColor(t_pixel *px, int color)
     px->pixel[color]= MIN(255, ((int)px->pixel[color] + (px->pixel[color] / 2)));
 }
 
+void aumentarColorAleatorio(t_pixel *px)
+{
+    srand(time(NULL));
+    int colorAleatorio = rand() % 3;
+
+    switch (colorAleatorio)
+    {
+        case 0:
+            // Aumentar purpura
+            aumentarColor(px, 2); // Aumentar rojo
+            aumentarColor(px, 0); // Aumentar azul
+            break;
+
+        case 1:
+            // Aumentar cian
+            aumentarColor(px, 1); // Aumentar verde
+            aumentarColor(px, 0); // Aumentar azul
+            break;
+
+        case 2:
+            // Aumentar amarillo
+            aumentarColor(px, 2); // Aumentar rojo
+            aumentarColor(px, 1); // Aumentar verde
+            break;
+    }
+}
+
+
 void reducirContraste(t_pixel *px, int min, int max) {
     float contraste_actual = (max - min) / (float)(max + min);
     float nuevo_contraste = contraste_actual * 0.75;
@@ -371,4 +366,96 @@ void reducirContraste(t_pixel *px, int min, int max) {
         int nuevo_valor = ((px->pixel[i] - min) * nuevo_contraste) / contraste_actual + min;
         px->pixel[i] = (unsigned char)MAX(0, MIN(255, nuevo_valor));
     }
+}
+
+void recortar(FILE *entrada, FILE *salida, t_metadata *metadata_entrada, t_metadata *metadata_salida)
+{
+    unsigned int width, height, nWidth, nHeight, inicioImg;
+    int i, j;
+
+    t_pixel px;
+
+    fseek(entrada, 10, SEEK_SET);
+    fread(&inicioImg, sizeof(unsigned int), 1, entrada);
+    fseek(entrada, 18, SEEK_SET);
+    fread(&width, sizeof(unsigned int), 1, entrada);
+    fread(&height, sizeof(unsigned int), 1, entrada);
+
+    fseek(entrada, inicioImg, SEEK_SET);
+    fseek(salida, inicioImg, SEEK_SET);
+
+    nWidth = (width/2);
+    nHeight = (height/2);
+
+    for (i = 0; i< nHeight; i++)
+    {
+        for (j = 0; j < nWidth; j++)
+        {
+            fread(px.pixel, sizeof(unsigned char), TAM_PIXEL, entrada);
+            fwrite(px.pixel, sizeof(unsigned char), TAM_PIXEL, salida);
+        }
+        fseek(entrada, (width - nWidth) * TAM_PIXEL, SEEK_CUR);
+    }
+
+    fseek(salida, 18, SEEK_SET);
+    fwrite(&nWidth, sizeof(unsigned int), 1, salida);
+    fwrite(&nHeight, sizeof(unsigned int), 1, salida);
+
+    fclose(entrada);
+    fclose(salida);
+}
+
+void rotarImagen(FILE *entrada, FILE *salida, t_metadata *metadata_entrada, t_metadata *metadata_salida, int argCod)
+{
+    unsigned char byte;
+    unsigned int height, width, nWidth, nHeight, inicioImg;
+
+    int tam;
+
+    fseek(entrada, 10, SEEK_SET);
+    fread(&inicioImg, sizeof(unsigned int), 1, entrada);
+
+    fseek(entrada, 18, SEEK_SET);
+    fread(&width, sizeof(unsigned int), 1, entrada);
+    fread(&height, sizeof(unsigned int), 1, entrada);
+
+    t_pixel vEntrada[width*height];
+    t_pixel vSalida[width*height];
+
+    tam = width*height;
+
+    nWidth=height;
+    nHeight=width;
+
+    fseek(entrada, 0, SEEK_SET);
+    fseek(salida, 0, SEEK_SET);
+
+    for (int i=0; i<inicioImg; i++)
+    {
+        fread(&byte, sizeof(unsigned char), 1, entrada);
+        fwrite(&byte, sizeof(unsigned char), 1, salida);
+    }
+
+    fseek(salida, 18, SEEK_SET);
+    fwrite(&nWidth, sizeof(unsigned int), 1, salida);
+    fwrite(&nHeight, sizeof(unsigned int), 1, salida);
+
+
+    fseek(entrada, inicioImg, SEEK_SET);
+    fseek(salida, inicioImg, SEEK_SET);
+    for(int i=0;i<tam;i++)
+        fread(vEntrada[i].pixel, sizeof(t_pixel), 1, entrada);
+
+    for(int y = 0; y < nHeight; y++)
+    {
+        for(int x = 0; x < nWidth; x++)
+        {
+            (argCod==10) ? (vSalida[y * nWidth + x] = vEntrada[x * nHeight + (nHeight - y - 1)]) : (vSalida[y * nWidth + x] = vEntrada[(nWidth - x - 1) * nHeight + y]); /*(para el otro lado)*/
+
+        }
+    }
+
+    for(int i=0;i<tam; i++)
+        fwrite(vSalida[i].pixel, sizeof(t_pixel), 1, salida);
+
 }

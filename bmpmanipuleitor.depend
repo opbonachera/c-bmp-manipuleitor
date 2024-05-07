@@ -64,3 +64,16 @@
 	"estructuras.h"
 	"funciones_estudiante.h"
 
+1715097131 source:c:\users\obonachera\documents\bmp-manipuleitor\main.c
+	<stdio.h>
+	"funciones_estudiante.h"
+	"constantes.h"
+
+1715097100 c:\users\obonachera\documents\bmp-manipuleitor\funciones_estudiante.h
+	"constantes.h"
+	"estructuras.h"
+
+1715097184 c:\users\obonachera\documents\bmp-manipuleitor\constantes.h
+
+1715096985 c:\users\obonachera\documents\bmp-manipuleitor\estructuras.h
+
