@@ -1,20 +1,22 @@
-#include  "imagegeneration.h"
-#include  "utilities.h"
-#include  "commandLine.h"
-
-#include "constantes.h"
+#include "imagegeneration.h"
+#include "commandLine.h"
 
 int bmpManipuleitor(int argc, char* argv[])
 {
-    char* imageFiles[2] = {NULL};
-    char* configFiles[1] = {NULL};
+    char* imageFiles[2] = {NULL, NULL};
+    char* configFile = NULL;
 
     short int parameters[8] = {0};
-    short int flag = 0;
+    int flag = 0;
 
-    processCommandLine(argc, argv, &parameters, &imageFiles, &configFiles, &flag);
+    if (argc < 2) {
+        printf("Insufficient arguments. Usage: bmpManipuleitor <args>\n");
+        return -1;
+    }
 
-    generateImages(flag, parameters);
+    processCommandLine(argc, argv, parameters, imageFiles, &configFile, &flag);
+
+    printf("Flag is (%d)", flag);
 
     return OK;
 }
