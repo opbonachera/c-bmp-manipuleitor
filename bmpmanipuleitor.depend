@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1735858821 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\genericas.c
+
+1738010950 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\main.c
+	<stdio.h>
+	<stdlib.h>
+	"imagegeneration.h"
+
+1735932455 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\matrix.c
+	"matrix.h"
+	"constantes.h"
+
+1735860319 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\matrix.h
+	"stdlib.h"
+	"stdio.h"
+	"estructuras.h"
+
+1735934569 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\estructuras.h
+
+1738010388 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\constantes.h
+
+1738010034 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.h
+	"string.h"
+	"stdio.h"
+	"stdlib.h"
+
+1738010713 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.c
+	"utilities.h"
+	"constantes.h"
+
+1738008441 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.c
+	"fileprocessing.h"
+
+1738009863 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.h
+
+1738010126 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.h
+
+1738010760 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.c
+	"commandLine.h"
+
+1738010805 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.h
+
+1738010816 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.c
+	"imagegeneration.h"
+	"utilities.h"
+	"commandLine.h"
+	"constantes.h"
+
