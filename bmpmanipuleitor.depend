@@ -55,37 +55,43 @@
 	"imagegeneration.h"
 	"commandLine.h"
 
-1738095361 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.c
+1738173519 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.c
 	"commandLine.h"
 	"utilities.h"
 	"imagegeneration.h"
 	"constantes.h"
 
-1738093525 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.h
+1738157353 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.h
 
-1738085305 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\fileprocessing.c
+1738177362 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\fileprocessing.c
 	"fileprocessing.h"
+	"utilities.h"
 
-1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\fileprocessing.h
+1738176457 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\fileprocessing.h
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	"constantes.h"
+	"imagegeneration.h"
 
 1738085305 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\genericas.c
 
-1738095801 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.c
+1738177833 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.c
 	"imagegeneration.h"
 	"commandLine.h"
 
-1738093671 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.h
+1738176408 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.h
 	<stddef.h>
 	"constantes.h"
 
-1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.h
+1738177625 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.h
 	"string.h"
 	"stdio.h"
 	"stdlib.h"
 
 1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\constantes.h
 
-1738085305 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\main.c
+1738156572 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\main.c
 	<stdio.h>
 	<stdlib.h>
 	"imagegeneration.h"
@@ -101,7 +107,7 @@
 
 1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\estructuras.h
 
-1738095785 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.c
+1738177743 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
 

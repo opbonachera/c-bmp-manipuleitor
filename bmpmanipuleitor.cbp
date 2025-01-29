@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--blue-tone --red-tone=40 image.bmp second.bmp tuki.bmp hola.txt " />
+				<Option parameters="--red-tone=90 --blue-tone=15 --green-tone=16 --reduce-contrast=22 --increase-contrast=12 --crop=98 --shrink=2334 --grayscale --negative --rotate-left --rotate-right image.bmp second.bmp tuki.bmp hola.txt " />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

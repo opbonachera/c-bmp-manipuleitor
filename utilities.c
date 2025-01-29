@@ -17,15 +17,12 @@ char* getArgument(const char* argument, const char* separator)
 
     strcpy(copy, argument);
 
-
     char* pos = strstr(copy, separator);
-    if (!pos)
-    {
-        free(copy);
-        return NULL;
-    }
 
-    pos += strlen(separator);
+    if(pos)
+    {
+        pos += strlen(separator);
+    }
 
     char* equalSymbol = strchr(pos, '=');
     if (equalSymbol)
@@ -36,6 +33,7 @@ char* getArgument(const char* argument, const char* separator)
 
     char* result = strdup(pos);
     free(copy);
+
     return result;
 }
 
@@ -59,84 +57,73 @@ int getParameter(char* parameter)
 
     free(copy);
 
-    return result;
+    return truncate(result);
 }
 
-
-int processArgument(char* argument, short int* parameter, short int* parameters[], int* flag)
+int processArgument(char* argument, short int parameter, short int parameters[], short int* flag)
 {
-    printf("Argument is (%s) Parameter is (%d) flag is (%d) \n", argument, parameter, *flag);
+    //printf("Argument is (%s) Parameter is (%hd) Flag is (%d)\n", argument, parameter);
+
     if (!strcmp(argument, "red-tone"))
     {
         parameters[0] = parameter;
-        return *flag | RED_TONE;
+        return *flag |= RED_TONE;
     }
-
     if (!strcmp(argument, "blue-tone"))
     {
         parameters[1] = parameter;
-        return *flag | BLUE_TONE;
+        return *flag |= BLUE_TONE;
     }
-
     if (!strcmp(argument, "green-tone"))
     {
         parameters[2] = parameter;
-        return *flag | GREEN_TONE;
+        return *flag |=  GREEN_TONE;
     }
-
     if (!strcmp(argument, "reduce-contrast"))
     {
         parameters[3] = parameter;
-        return *flag | REDUCE_CONTRAST;
+        return *flag |=  REDUCE_CONTRAST;
     }
-
     if (!strcmp(argument, "increase-contrast"))
     {
         parameters[4] = parameter;
-        return *flag | INCREASE_CONTRAST;
+        return *flag |=  INCREASE_CONTRAST;
     }
-
     if (!strcmp(argument, "grayscale"))
-        return *flag | GRAYSCALE;
-
+        return *flag |=  GRAYSCALE;
     if (!strcmp(argument, "negative"))
-        return *flag | NEGATIVE;
-
+        return *flag |=  NEGATIVE;
     if (!strcmp(argument, "crop"))
     {
         parameters[5] = parameter;
-        return *flag | CROP;
+        return *flag |=  CROP;
     }
-
     if (!strcmp(argument, "shrink"))
     {
         parameters[6] = parameter;
-        return *flag | SHRINK;
+        return *flag |=  SHRINK;
     }
-
     if (!strcmp(argument, "rotate-left"))
-        return *flag | ROTATE_LEFT;
-
+        return *flag |=  ROTATE_LEFT;
     if (!strcmp(argument, "rotate-right"))
-        return *flag | ROTATE_RIGHT;
-
+        return *flag |=  ROTATE_RIGHT;
     if (!strcmp(argument, "flip-vertical"))
-        return *flag | FLIP_VERTICAL;
-
+        return *flag |=  FLIP_VERTICAL;
     if (!strcmp(argument, "flip-horizontal"))
-        return *flag | FLIP_HORIZONTAL;
-
+        return *flag |=  FLIP_HORIZONTAL;
     if (!strcmp(argument, "concat-vertical"))
-        return *flag | CONCAT_VERTICAL;
-
+        return *flag |=  CONCAT_VERTICAL;
     if (!strcmp(argument, "concat-horizontal"))
-        return *flag | CONCAT_HORIZONTAL;
-
+        return *flag |=  CONCAT_HORIZONTAL;
     if (!strcmp(argument, "pixelate"))
-        return *flag | PIXELATE;
-
+        return *flag |=  PIXELATE;
     if (!strcmp(argument, "blur"))
-        return *flag | BLUR;
+        return *flag |=  BLUR;
 
-    return *flag; // Default return if no match
+    return *flag;
+}
+
+int truncate(int intg)
+{
+    return intg < 0 ? 0 : intg > 101 ? 100 : intg;
 }

@@ -6,7 +6,7 @@
 
 int processCommandLine(const int argc, char* argv[], short int* parameters, char* imageFiles[], char* filterFile[], int* flag)
 {
-    for (int i = 0; i < argc; i++)
+    for (int i = 1; i < argc; i++)
     {
         if(checkArgumentType(argv[i], "--"))
         {
@@ -14,7 +14,7 @@ int processCommandLine(const int argc, char* argv[], short int* parameters, char
 
             short int parameter = getParameter(argv[i]);
 
-            *flag = processArgument(command, parameter, parameters, flag);
+            processArgument(command, parameter, parameters, flag);
 
         }
 
@@ -28,12 +28,10 @@ int processCommandLine(const int argc, char* argv[], short int* parameters, char
                 printf("Only two image files allowed.\n");
         }
 
-        // Check for filter files
         if (checkArgumentType(argv[i], ".txt"))
         {
             if (*filterFile == NULL)
                 *filterFile = argv[i];
-
 
             else
                 printf("Only one filter file allowed.\n");

@@ -9,6 +9,6 @@
 #include "imagegeneration.h"
 
 
-void processFilterFile(const char* filename, short int* parameter, short int* parameters, int* flag);
+void processFilterFile(const char* filename, short int* parameter, short int* parameters, short int* flag);
 
 #endif // FILE_PROCESSING_INCLUDED
