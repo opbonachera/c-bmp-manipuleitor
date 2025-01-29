@@ -31,8 +31,10 @@ int processCommandLine(const int argc, char* argv[], short int* parameters, char
         // Check for filter files
         if (checkArgumentType(argv[i], ".txt"))
         {
-            if (!filterFile)
-                filterFile = argv[i];
+            if (*filterFile == NULL)
+                *filterFile = argv[i];
+
+
             else
                 printf("Only one filter file allowed.\n");
         }

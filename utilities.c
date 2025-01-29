@@ -68,31 +68,31 @@ int processArgument(char* argument, short int* parameter, short int* parameters[
     printf("Argument is (%s) Parameter is (%d) flag is (%d) \n", argument, parameter, *flag);
     if (!strcmp(argument, "red-tone"))
     {
-        parameters[1] = parameter;
+        parameters[0] = parameter;
         return *flag | RED_TONE;
     }
 
     if (!strcmp(argument, "blue-tone"))
     {
-        parameters[2] = parameter;
+        parameters[1] = parameter;
         return *flag | BLUE_TONE;
     }
 
     if (!strcmp(argument, "green-tone"))
     {
-        parameters[3] = parameter;
+        parameters[2] = parameter;
         return *flag | GREEN_TONE;
     }
 
     if (!strcmp(argument, "reduce-contrast"))
     {
-        parameters[4] = parameter;
+        parameters[3] = parameter;
         return *flag | REDUCE_CONTRAST;
     }
 
     if (!strcmp(argument, "increase-contrast"))
     {
-        parameters[5] = parameter;
+        parameters[4] = parameter;
         return *flag | INCREASE_CONTRAST;
     }
 
@@ -104,13 +104,13 @@ int processArgument(char* argument, short int* parameter, short int* parameters[
 
     if (!strcmp(argument, "crop"))
     {
-        parameters[6] = parameter;
+        parameters[5] = parameter;
         return *flag | CROP;
     }
 
     if (!strcmp(argument, "shrink"))
     {
-        parameters[7] = parameter;
+        parameters[6] = parameter;
         return *flag | SHRINK;
     }
 

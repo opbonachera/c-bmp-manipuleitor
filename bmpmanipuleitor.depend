@@ -19,32 +19,41 @@
 
 1738010388 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\constantes.h
 
-1738010034 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.h
+1738104147 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.h
 	"string.h"
 	"stdio.h"
 	"stdlib.h"
 
-1738010713 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.c
+1738101623 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
 
-1738008441 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.c
+1738104076 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.c
 	"fileprocessing.h"
-
-1738009863 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.h
-
-1738010126 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.h
-
-1738010760 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.c
-	"commandLine.h"
-
-1738010805 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.h
-
-1738010816 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.c
-	"imagegeneration.h"
 	"utilities.h"
-	"commandLine.h"
+
+1738104076 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.h
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
 	"constantes.h"
+	"imagegeneration.h"
+
+1738101145 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.h
+	<stddef.h>
+	"constantes.h"
+
+1738102122 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.c
+	"commandLine.h"
+	"utilities.h"
+	"imagegeneration.h"
+	"constantes.h"
+
+1738101145 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.h
+
+1738101957 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.c
+	"imagegeneration.h"
+	"commandLine.h"
 
 1738095361 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.c
 	"commandLine.h"

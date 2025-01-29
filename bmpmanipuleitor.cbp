@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--blue-tone --red-tone=40 image.bmp second.bmp tuki.bmp hola.txt chu.txt" />
+				<Option parameters="--blue-tone --red-tone=40 image.bmp second.bmp tuki.bmp hola.txt " />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

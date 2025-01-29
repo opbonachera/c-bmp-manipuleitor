@@ -16,16 +16,23 @@ int bmpManipuleitor(int argc, char* argv[])
 
     processCommandLine(argc, argv, parameters, imageFiles, &configFile, &flag);
 
-    printf("Flag is (%d)", flag);
+    printf("Config file from bmpmanipuleitor (%s)\n", configFile);
+
+    processFilterFile(configFile, 0, parameters, flag);
+
+    generateImages(flag, parameters);
 
     return OK;
 }
 
 void generateImages(short int flag, short int parameters[])
 {
+    for(int i=0; i<3; i++)
+        printf("Parameter: [%d]\n", parameters[i]);
+
     if (flag & RED_TONE)
-        printf("Red tone is enabled with parameter %hd\n", parameters[1]);
+        printf("Red tone is enabled with parameter %hd\n", parameters[0]);
     if (flag & BLUE_TONE)
-        printf("Blue tone is enabled with parameter %hd\n", parameters[2]);
-    // Add more conditions as needed...
+        printf("Blue tone is enabled with parameter %hd\n", parameters[1]);
+
 }
