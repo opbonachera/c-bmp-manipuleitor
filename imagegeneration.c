@@ -25,8 +25,8 @@ int bmpManipuleitor(int argc, char* argv[])
 
 void generateImages(short int* flag, short int parameters[])
 {
-    for(int i=0; i<8; i++)
-        printf("[%d]\n", parameters[i]);
+    // for(int i=0; i<8; i++)
+    //     printf("[%d]\n", parameters[i]);
     if (*flag & RED_TONE)
         printf("Red tone is enabled with parameter %hd\n", parameters[0]);
     if (*flag & BLUE_TONE)
@@ -62,4 +62,43 @@ void generateImages(short int* flag, short int parameters[])
         printf("Pixelate is enabled\n");
     if (*flag & BLUR)
         printf("Blur is enabled\n");
+}
+
+void modificarDimensiones(FILE* image, int nuevoX, int nuevoY)
+{
+    fseek(image, 18, SEEK_SET);
+    fwrite(&nuevoX, sizeof(unsigned int), 1, image);
+    fwrite(&nuevoY, sizeof(unsigned int), 1, image);
+}
+
+int readHeader(FILE* image, t_header *cabecera)
+{
+    fseek(image, 2, SEEK_SET);
+    fread(&cabecera->tamArchivo, sizeof(unsigned int), 1, image);
+
+    fseek(image, 14, SEEK_SET);
+    fread(&cabecera->tamEncabezado, sizeof(unsigned int), 1, image);
+
+    fseek(image, 10, SEEK_SET);
+    fread(&cabecera->comienzoImagen, sizeof(unsigned int), 1, image);
+
+    fseek(image, 18, SEEK_SET);
+    fread(&cabecera->ancho, sizeof(unsigned int), 1, image);
+
+    fseek(image, 22, SEEK_SET);
+    fread(&cabecera->alto, sizeof(unsigned int), 1, image);
+
+    fseek(image, 28, SEEK_SET);
+    fread(&cabecera->profundidad, sizeof(unsigned short), 1, image);
+
+    fseek(image, 0, SEEK_SET);
+    return 0;
+}
+
+void writeHeader(FILE* image, FILE* newImage, t_header* ogHeader)
+{
+    char bytes[ogHeader->comienzoImagen];
+
+    fread(&bytes, sizeof(bytes), 1, image);
+    fwrite(&bytes, sizeof(bytes), 1, newImage);
 }

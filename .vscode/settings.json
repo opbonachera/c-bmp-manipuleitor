@@ -1,6 +1,8 @@
 {
     "files.associations": {
+        "jinja-md": "md",
         "estructuras.h": "c",
-        "genericas.h": "c"
+        "genericas.h": "c",
+        "constantes.h": "c"
     }
 }

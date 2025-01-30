@@ -19,8 +19,8 @@
 #define PIXELATE            1 << 16
 #define BLUR                1 << 17
 
-#define OK                      0b0
-#define ERROR_OPENING_FILE      0b10
-#define ERROR_ALLOCATING_MEMORY 0b11
-
+#define OK                       0b0
+#define ERROR_OPENING_FILE       0b10
+#define ERROR_ALLOCATING_MEMORY  0b11
+#define ERROR_INSUFFICIENT_FILES 0b100
 #endif // UTILITIES_H_INCLUDED

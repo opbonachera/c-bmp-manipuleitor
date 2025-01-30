@@ -56,7 +56,7 @@
 	"imagegeneration.h"
 	"commandLine.h"
 
-1738173519 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.c
+1738178597 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\commandline.c
 	"commandLine.h"
 	"utilities.h"
 	"imagegeneration.h"
@@ -75,24 +75,29 @@
 	"constantes.h"
 	"imagegeneration.h"
 
-1738085305 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\genericas.c
+1738259514 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\genericas.c
+	"genericas.h"
+	"estructuras.h"
+	"constantes.h"
 
-1738177833 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.c
+1738258853 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.c
 	"imagegeneration.h"
 	"commandLine.h"
 
-1738176408 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.h
+1738259964 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\imagegeneration.h
 	<stddef.h>
+	<stdio.h>
 	"constantes.h"
+	"estructuras.h"
 
-1738177625 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.h
+1738240743 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.h
 	"string.h"
 	"stdio.h"
 	"stdlib.h"
 
-1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\constantes.h
+1738258276 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\constantes.h
 
-1738156572 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\main.c
+1738240964 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\main.c
 	<stdio.h>
 	<stdlib.h>
 	"imagegeneration.h"
@@ -106,9 +111,9 @@
 	"stdio.h"
 	"estructuras.h"
 
-1738085305 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\estructuras.h
+1738240743 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\estructuras.h
 
-1738177743 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.c
+1738240743 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
 
@@ -118,4 +123,11 @@
 	"prototipos.h"
 
 1738195929 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\prototipos.h
+
+1738240743 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\genericas.h
+	<stdio.h>
+	"estructuras.h"
+	"prototipos.h"
+
+1738240743 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\prototipos.h
 
