@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "estructuras.h": "c",
+        "genericas.h": "c"
+    }
+}

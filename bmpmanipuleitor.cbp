@@ -49,6 +49,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="genericas.h" />
+		<Unit filename="hola.txt" />
 		<Unit filename="imagegeneration.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1735858821 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\genericas.c
+1738195725 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\genericas.c
+	"genericas.h"
 
-1738010950 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\main.c
+1738196169 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\main.c
 	<stdio.h>
 	<stdlib.h>
 	"imagegeneration.h"
@@ -15,43 +16,43 @@
 	"stdio.h"
 	"estructuras.h"
 
-1735934569 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\estructuras.h
+1738195876 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\estructuras.h
 
 1738010388 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\constantes.h
 
-1738104147 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.h
+1738196392 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.h
 	"string.h"
 	"stdio.h"
 	"stdlib.h"
 
-1738101623 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.c
+1738196126 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
 
-1738104076 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.c
+1738193753 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.c
 	"fileprocessing.h"
 	"utilities.h"
 
-1738104076 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.h
+1738193753 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\fileprocessing.h
 	<stddef.h>
 	<stdio.h>
 	<stdlib.h>
 	"constantes.h"
 	"imagegeneration.h"
 
-1738101145 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.h
+1738193753 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.h
 	<stddef.h>
 	"constantes.h"
 
-1738102122 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.c
+1738193753 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.c
 	"commandLine.h"
 	"utilities.h"
 	"imagegeneration.h"
 	"constantes.h"
 
-1738101145 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.h
+1738193753 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\commandline.h
 
-1738101957 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.c
+1738193753 source:c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\imagegeneration.c
 	"imagegeneration.h"
 	"commandLine.h"
 
@@ -110,4 +111,11 @@
 1738177743 source:c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
+
+1738195935 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\genericas.h
+	<stdio.h>
+	"estructuras.h"
+	"prototipos.h"
+
+1738195929 c:\users\orneb\onedrive\documentos\universidad\materias\topicos de programacion\bmpmanipuleitor\prototipos.h
 

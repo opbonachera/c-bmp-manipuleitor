@@ -127,3 +127,19 @@ int truncate(int intg)
 {
     return intg < 0 ? 0 : intg > 101 ? 100 : intg;
 }
+
+char* getNewFilename(const char* firstFile, const char* secondFile, const char* filterName, const char* extension)
+{
+
+    size_t size = strlen(firstFile) + strlen(secondFile) + strlen(filterName) + strlen(extension) + 4;
+
+
+    char* result = malloc(size);
+    if (!result)
+        return NULL;
+
+
+    snprintf(result, size, "%s_%s_%s%s", firstFile, secondFile, filterName, extension);
+
+    return result;
+}
