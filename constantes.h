@@ -23,4 +23,8 @@
 #define ERROR_OPENING_FILE       0b10
 #define ERROR_ALLOCATING_MEMORY  0b11
 #define ERROR_INSUFFICIENT_FILES 0b100
+
+#define MIN(a, b) ( ((a) < (b)) ? (a) : (b) )
+
+
 #endif // UTILITIES_H_INCLUDED

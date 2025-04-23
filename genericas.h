@@ -6,13 +6,6 @@
 #include "estructuras.h"
 #include "prototipos.h"
 
-int modifyImageTone(FILE* ogImage, char* newFilename, int parametro, ModifyPixel aplicarFiltro);
-int rotateImage    (FILE* ogImage, char* newFilename, ModifyMatrix modificarMatriz);
-int mirrorImage    (FILE* ogImage, char* newFilename, ModifyMatrix modificarMatriz);
-int cropImage      (FILE* ogImage, char* newFilename, int parametro, ModifyMatrix modificarMatriz);
-int shrinkImage    (FILE* ogImage, char* newFilename, int parametro, ShrinkMatrix achicar);
-int concatImages   (FILE* firstOgImage, FILE* img2, char* newFilename, ConcatMatrix concat, char m);
-
 void genGrayscale       (t_pixel* pixel, float  intensity);
 void genNegative        (t_pixel* pixel, float  intensity);
 void genRaiseContrast   (t_pixel* pixel, float  intensity);

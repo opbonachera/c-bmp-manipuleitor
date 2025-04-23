@@ -14,21 +14,47 @@ int bmpManipuleitor(int argc, char* argv[])
         return -1;
     }
 
+
     processCommandLine(argc, argv, parameters, imageFiles, &configFile, &flag);
 
     processFilterFile(configFile, 0, parameters, &flag);
 
-    generateImages(&flag, parameters);
+    printf("[%s]", imageFiles[0]);
+    printf("[%s]", imageFiles[1]);
+
+    FILE* firstImage = fopen(imageFiles[0], "rb");
+
+    if(!firstImage)
+    {
+        printf("Unable to open file");
+    }
+
+    FILE* secondImage = fopen(imageFiles[1], "rb");
+
+    if(!secondImage)
+    {
+        printf("Unable to open file");
+    }
+
+    generateImages(&flag, parameters, firstImage, secondImage, imageFiles[0]);
 
     return OK;
 }
 
-void generateImages(short int* flag, short int parameters[])
+void generateImages(short int* flag, short int parameters[], FILE* firstImage, FILE* secondImage, char* filename)
 {
-    // for(int i=0; i<8; i++)
-    //     printf("[%d]\n", parameters[i]);
+    char* newImageName;
+
     if (*flag & RED_TONE)
+    {
         printf("Red tone is enabled with parameter %hd\n", parameters[0]);
+        newImageName = generateImageName("red-tone",  filename);
+
+        printf("New filename is [%s]\n", newImageName);
+        modifyImageTone(firstImage, newImageName, parameters[0], genChangeRedTone);
+    }
+
+
     if (*flag & BLUE_TONE)
         printf("Blue tone is enabled with parameter %hd\n", parameters[1]);
     if (*flag & GREEN_TONE)
@@ -73,6 +99,7 @@ void modificarDimensiones(FILE* image, int nuevoX, int nuevoY)
 
 int readHeader(FILE* image, t_header *cabecera)
 {
+    printf("reading header");
     fseek(image, 2, SEEK_SET);
     fread(&cabecera->tamArchivo, sizeof(unsigned int), 1, image);
 
@@ -101,4 +128,247 @@ void writeHeader(FILE* image, FILE* newImage, t_header* ogHeader)
 
     fread(&bytes, sizeof(bytes), 1, image);
     fwrite(&bytes, sizeof(bytes), 1, newImage);
+}
+
+
+int modifyImageTone(FILE* originalImage, char* newFilename, int parameter, ModifyPixel applyFilter)
+{
+    FILE* newImage = fopen(newFilename, "wb");
+    printf("New file created");
+    if (!newImage)
+    {
+        printf("\nError creating image (%s)\n.", newFilename);
+        return ERROR_OPENING_FILE;
+    }
+
+    t_header header;
+
+    readHeader(originalImage, &header);
+    printf("Image dimensions: %u x %u, Bit depth: %hu\n", header.ancho, header.alto, header.profundidad);
+    writeHeader(originalImage, newImage, &header);
+
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), header.alto, header.ancho);
+    t_pixel** newMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), header.alto, header.ancho);
+
+    matrixFromFile(header.alto, header.ancho, originalImage, originalMatrix);
+
+    /*
+    for (int i = 0; i < header.alto; i++)
+    {
+        for (int j = 0; j < header.ancho; j++)
+        {
+            newMatrix[i][j] = originalMatrix[i][j];
+            applyFilter(&newMatrix[i][j], (float)parameter);
+        }
+    }*/
+
+    // writeFile(newImage, newMatrix, header.alto, header.ancho);
+
+    destroyMatrix((void**)originalMatrix, header.alto);
+    destroyMatrix((void**)newMatrix, header.alto);
+
+    fclose(newImage);
+
+    return OK;
+}
+
+int rotateImage(FILE* originalImage, char* newFilename, ModifyMatrix modifyMatrix)
+{
+    FILE* newImage = fopen(newFilename, "wb");
+
+    if (!newImage)
+        return ERROR_OPENING_FILE;
+
+    if (!originalImage)
+        return ERROR_OPENING_FILE;
+
+    t_header originalHeader;
+
+    readHeader(originalImage, &originalHeader);
+    writeHeader(originalImage, newImage, &originalHeader);
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto, originalHeader.ancho);
+    t_pixel** rotatedMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.ancho, originalHeader.alto);
+
+    matrixFromFile(originalHeader.alto, originalHeader.ancho, originalImage, originalMatrix);
+
+    modifyMatrix(originalMatrix, rotatedMatrix, originalHeader.alto, originalHeader.ancho);
+
+    writeFile(newImage, rotatedMatrix, originalHeader.ancho, originalHeader.alto);
+
+    destroyMatrix((void**)originalMatrix, originalHeader.alto);
+    destroyMatrix((void**)rotatedMatrix, originalHeader.ancho);
+
+    modificarDimensiones(newImage, originalHeader.alto, originalHeader.ancho);
+
+    fclose(newImage);
+
+    return OK;
+}
+
+int mirrorImage(FILE* originalImage, char* newFilename, ModifyMatrix modifyMatrix)
+{
+    FILE* newImage = fopen(newFilename, "wb");
+
+    if (!newImage)
+        return ERROR_OPENING_FILE;
+
+    if (!originalImage)
+        return ERROR_OPENING_FILE;
+
+    t_header originalHeader;
+
+    readHeader(originalImage, &originalHeader);
+    writeHeader(originalImage, newImage, &originalHeader);
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto, originalHeader.ancho);
+    t_pixel** mirroredMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto, originalHeader.ancho);
+
+    matrixFromFile(originalHeader.alto, originalHeader.ancho, originalImage, originalMatrix);
+
+    modifyMatrix(originalMatrix, mirroredMatrix, originalHeader.alto, originalHeader.ancho);
+
+    writeFile(newImage, mirroredMatrix, originalHeader.alto, originalHeader.ancho);
+
+    destroyMatrix((void**)originalMatrix, originalHeader.alto);
+    destroyMatrix((void**)mirroredMatrix, originalHeader.alto);
+
+    fclose(newImage);
+
+    return OK;
+}
+
+int cropImage(FILE* originalImage, char* newFilename, int parameter, ModifyMatrix modifyMatrix)
+{
+    FILE* newImage;
+    int newWidth, newHeight;
+    t_header originalHeader;
+
+    newImage = fopen(newFilename, "wb");
+    if (!newImage)
+        return ERROR_OPENING_FILE;
+
+    readHeader(originalImage, &originalHeader);
+
+    newWidth = originalHeader.ancho * parameter / 100;
+    newHeight = originalHeader.alto * parameter / 100;
+
+    originalHeader.ancho = newWidth;
+    originalHeader.alto = newHeight;
+
+    writeHeader(originalImage, newImage, &originalHeader);
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto * 100 / parameter, originalHeader.ancho * 100 / parameter);
+    t_pixel** croppedMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), newHeight, newWidth);
+
+    matrixFromFile(originalHeader.alto * 100 / parameter, originalHeader.ancho * 100 / parameter, originalImage, originalMatrix);
+    modifyMatrix(originalMatrix, croppedMatrix, newHeight, newWidth);
+
+    writeFile(newImage, croppedMatrix, newHeight, newWidth);
+
+    destroyMatrix((void**)originalMatrix, originalHeader.alto * 100 / parameter);
+    destroyMatrix((void**)croppedMatrix, newHeight);
+
+    modificarDimensiones(newImage, newWidth, newHeight);
+
+    fclose(newImage);
+
+    return OK;
+}
+
+int shrinkImage(FILE* originalImage, char* newFilename, int parameter, ShrinkMatrix shrink)
+{
+    FILE* newImage;
+    t_header originalHeader;
+
+    newImage = fopen(newFilename, "wb");
+    if (!newImage)
+        return ERROR_OPENING_FILE;
+
+    readHeader(originalImage, &originalHeader);
+    writeHeader(originalImage, newImage, &originalHeader);
+
+    int newHeight = originalHeader.alto * parameter / 100;
+    int newWidth = originalHeader.ancho * parameter / 100;
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto, originalHeader.ancho);
+    t_pixel** shrunkMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), newHeight, newWidth);
+
+    fseek(originalImage, originalHeader.comienzoImagen, SEEK_SET);
+
+    matrixFromFile(originalHeader.alto, originalHeader.ancho, originalImage, originalMatrix);
+
+    shrink(originalMatrix, shrunkMatrix, newHeight, newWidth, &originalHeader);
+
+    writeFile(newImage, shrunkMatrix, newHeight, newWidth);
+    modificarDimensiones(newImage, newWidth, newHeight);
+
+    destroyMatrix((void**)originalMatrix, originalHeader.alto);
+    destroyMatrix((void**)shrunkMatrix, newHeight);
+
+    fclose(newImage);
+
+    return OK;
+}
+
+int concatImages(FILE* firstImage, FILE* secondImage, char* newFilename, ConcatMatrix concat, char mode)
+{
+    if (!firstImage || !secondImage)
+    {
+        printf("ERROR_OPENING_FILE: para concatenar imágenes deben enviarse dos archivos .bmp \n");
+        return ERROR_INSUFFICIENT_FILES;
+    }
+
+    FILE* newImage = fopen(newFilename, "wb");
+
+    if (!newImage)
+        return ERROR_OPENING_FILE;
+
+    t_header header1, header2, newHeader;
+    readHeader(firstImage, &header1);
+    readHeader(secondImage, &header2);
+    readHeader(secondImage, &newHeader);
+
+    int newHeight, newWidth;
+    if (mode == 'V')
+    {
+        newHeight = header1.alto + header2.alto;
+        newWidth = (header1.ancho > header2.ancho) ? header1.ancho : header2.ancho;
+    }
+    else
+    {
+        newHeight = (header1.alto > header2.alto) ? header1.alto : header2.alto;
+        newWidth = header1.ancho + header2.ancho;
+    }
+
+    newHeader.alto = newHeight;
+    newHeader.ancho = newWidth;
+
+    writeHeader(firstImage, newImage, &newHeader);
+
+    t_pixel** matrixFirst = (t_pixel**)initMatrix(sizeof(t_pixel), header1.alto, header1.ancho);
+    t_pixel** matrixSecond = (t_pixel**)initMatrix(sizeof(t_pixel), header2.alto, header2.ancho);
+    t_pixel** concatenatedMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), newHeight, newWidth);
+
+    fseek(secondImage, header2.comienzoImagen, SEEK_SET);
+    fseek(firstImage, header1.comienzoImagen, SEEK_SET);
+
+    matrixFromFile(header1.alto, header1.ancho, firstImage, matrixFirst);
+    matrixFromFile(header1.alto, header1.ancho, secondImage, matrixSecond);
+
+    concat(matrixFirst, matrixSecond, concatenatedMatrix, &header1, &header2, &newHeader);
+
+    fseek(newImage, header1.comienzoImagen, SEEK_SET);
+    writeFile(newImage, concatenatedMatrix, newHeight, newWidth);
+
+    modificarDimensiones(newImage, newWidth, newHeight);
+
+    destroyMatrix((void**)matrixFirst, header1.alto);
+    destroyMatrix((void**)matrixSecond, header2.alto);
+    destroyMatrix((void**)concatenatedMatrix, newHeight);
+
+    fclose(newImage);
+
+    return OK;
 }

@@ -131,3 +131,72 @@
 
 1738240743 c:\users\leafnoise\documents\universidad\tópicos de programación\c-bmp-manipuleitor\prototipos.h
 
+1745430818 source:c:\users\leafnoise\c-bmp-manipuleitor\commandline.c
+	"commandLine.h"
+	"utilities.h"
+	"imagegeneration.h"
+	"constantes.h"
+
+1745430818 c:\users\leafnoise\c-bmp-manipuleitor\commandline.h
+
+1745432501 c:\users\leafnoise\c-bmp-manipuleitor\utilities.h
+	"string.h"
+	"stdio.h"
+	"stdlib.h"
+
+1745433709 c:\users\leafnoise\c-bmp-manipuleitor\imagegeneration.h
+	<stddef.h>
+	<stdio.h>
+	"constantes.h"
+	"estructuras.h"
+	"genericas.h"
+
+1745432588 c:\users\leafnoise\c-bmp-manipuleitor\constantes.h
+
+1745430818 c:\users\leafnoise\c-bmp-manipuleitor\estructuras.h
+
+1745433308 source:c:\users\leafnoise\c-bmp-manipuleitor\fileprocessing.c
+	"fileprocessing.h"
+	"utilities.h"
+
+1745434727 c:\users\leafnoise\c-bmp-manipuleitor\fileprocessing.h
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	"constantes.h"
+	"imagegeneration.h"
+
+1745432595 source:c:\users\leafnoise\c-bmp-manipuleitor\genericas.c
+	"genericas.h"
+	"estructuras.h"
+	"constantes.h"
+
+1745432175 c:\users\leafnoise\c-bmp-manipuleitor\genericas.h
+	<stdio.h>
+	"estructuras.h"
+	"prototipos.h"
+
+1745430818 c:\users\leafnoise\c-bmp-manipuleitor\prototipos.h
+
+1745433755 source:c:\users\leafnoise\c-bmp-manipuleitor\imagegeneration.c
+	"imagegeneration.h"
+	"commandLine.h"
+
+1745430818 source:c:\users\leafnoise\c-bmp-manipuleitor\main.c
+	<stdio.h>
+	<stdlib.h>
+	"imagegeneration.h"
+
+1745434437 source:c:\users\leafnoise\c-bmp-manipuleitor\matrix.c
+	"matrix.h"
+	"constantes.h"
+
+1745430818 c:\users\leafnoise\c-bmp-manipuleitor\matrix.h
+	"stdlib.h"
+	"stdio.h"
+	"estructuras.h"
+
+1745430818 source:c:\users\leafnoise\c-bmp-manipuleitor\utilities.c
+	"utilities.h"
+	"constantes.h"
+
