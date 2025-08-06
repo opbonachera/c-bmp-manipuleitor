@@ -200,3 +200,71 @@
 	"utilities.h"
 	"constantes.h"
 
+1754489200 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\commandline.c
+	"commandLine.h"
+	"utilities.h"
+	"imagegeneration.h"
+	"constantes.h"
+
+1754489993 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\commandline.h
+
+1754490143 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\utilities.h
+	"string.h"
+	"stdio.h"
+	"stdlib.h"
+
+1754492444 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\imagegeneration.h
+	<stddef.h>
+	<stdio.h>
+	"constantes.h"
+	"genericas.h"
+	"utilities.h"
+	"fileprocessing.h"
+	"matrix.h"
+
+1754489364 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\constantes.h
+
+1754489477 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\estructuras.h
+
+1754489698 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\genericas.h
+	<stdio.h>
+	"constantes.h"
+
+1754489200 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\prototipos.h
+
+1754493715 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.c
+	"fileprocessing.h"
+	"utilities.h"
+
+1754489933 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.h
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	"constantes.h"
+	"imagegeneration.h"
+
+1754489728 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\genericas.c
+	"genericas.h"
+	"constantes.h"
+
+1754494117 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\imagegeneration.c
+	"imagegeneration.h"
+
+1754489200 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\main.c
+	<stdio.h>
+	<stdlib.h>
+	"imagegeneration.h"
+
+1754494182 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\matrix.c
+	"matrix.h"
+	"constantes.h"
+
+1754490434 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\matrix.h
+	"stdlib.h"
+	"stdio.h"
+	"constantes.h"
+
+1754492897 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\utilities.c
+	"utilities.h"
+	"constantes.h"
+

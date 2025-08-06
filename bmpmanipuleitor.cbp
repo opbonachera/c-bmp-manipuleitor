@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="--red-tone=90 --blue-tone=15 --green-tone=16 --reduce-contrast=22 --increase-contrast=12 --crop=98 --shrink=2334 --grayscale --negative --rotate-left --rotate-right image.bmp second.bmp tuki.bmp hola.txt " />
+				<Option parameters="--red-tone=90 --blue-tone=15 --green-tone=16 --reduce-contrast=22 --increase-contrast=12 --crop=98 --shrink=2334 --grayscale --negative --rotate-left --rotate-right image.bmp " />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -35,12 +35,7 @@
 		<Unit filename="bmpmanipuleitor.cbp" />
 		<Unit filename="bmpmanipuleitor.depend" />
 		<Unit filename="bmpmanipuleitor.layout" />
-		<Unit filename="commandLine.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="commandLine.h" />
 		<Unit filename="constantes.h" />
-		<Unit filename="estructuras.h" />
 		<Unit filename="fileprocessing.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -62,7 +57,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="matrix.h" />
-		<Unit filename="prototipos.h" />
 		<Unit filename="utilities" />
 		<Unit filename="utilities,c" />
 		<Unit filename="utilities.c">

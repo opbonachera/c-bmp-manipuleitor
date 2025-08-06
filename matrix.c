@@ -9,10 +9,10 @@ void** initMatrix(int rows, int columns, size_t elementSize)
 
     for (int i = 0; i < rows; i++)
     {
-        matrix[i] = malloc(columns * elementSize);
+        matrix[i] = malloc(elementSize * columns);
         if (!matrix[i])
         {
-            destroyMatrix(rows, matrix, elementSize);
+            destroyMatrix(matrix, i);
             return NULL;
         }
     }
@@ -20,13 +20,14 @@ void** initMatrix(int rows, int columns, size_t elementSize)
     return matrix;
 }
 
-int destroyMatrix(int rows, void** matrix, size_t elementSize)
-{
-    for (int i = 0; i < rows; i++)
-    {
-        free(matrix[i]);
-    }
 
+int destroyMatrix(void** matrix, int rows)
+{
+    void** last = matrix + (rows - 1);
+    for(void** i = matrix; i<last; i++)
+    {
+        free(*i);
+    }
     free(matrix);
     return OK;
 }

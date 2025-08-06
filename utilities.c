@@ -3,7 +3,7 @@
 
 int checkArgumentType(char* argument, char* separator)
 {
-    return (int)strstr(argument, separator);
+    return strstr(argument, separator) != NULL;
 }
 
 char* getArgument(const char* argument, const char* separator)
@@ -54,13 +54,14 @@ int getParameter(char* parameter)
     pos++;
 
     int result = atoi(pos);
+    *pos='\0';
 
     free(copy);
 
     return truncate(result);
 }
 
-int processArgument(char* argument, short int parameter, short int parameters[], short int* flag)
+int processArgument(char* argument, short int parameter, short int parameters[], int* flag)
 {
     //printf("Argument is (%s) Parameter is (%hd) Flag is (%d)\n", argument, parameter);
 
@@ -142,4 +143,42 @@ char* getNewFilename(const char* firstFile, const char* secondFile, const char* 
     snprintf(result, size, "%s_%s_%s%s", firstFile, secondFile, filterName, extension);
 
     return result;
+}
+
+
+int processCommandLine(const int argc, char* argv[], short int* parameters, char* imageFiles[], char* filterFile[], int* flag)
+{
+    for (int i = 1; i < argc; i++)
+    {
+        if(checkArgumentType(argv[i], "--"))
+        {
+            char* command = getArgument(argv[i], "--");
+
+            int parameter = getParameter(argv[i]);
+
+            processArgument(command, parameter, parameters, flag);
+
+        }
+
+        if (checkArgumentType(argv[i], ".bmp"))
+        {
+            if (!imageFiles[0])
+                imageFiles[0] = argv[i];
+            else if (!imageFiles[1])
+                imageFiles[1] = argv[i];
+            else
+                printf("Only two image files allowed.\n");
+        }
+
+        if (checkArgumentType(argv[i], ".txt"))
+        {
+            if (*filterFile == NULL)
+                *filterFile = argv[i];
+
+            else
+                printf("Only one filter file allowed.\n");
+        }
+    }
+
+    return 0;
 }

@@ -1,5 +1,5 @@
 #include "imagegeneration.h"
-#include "commandLine.h"
+
 
 int bmpManipuleitor(int argc, char* argv[])
 {
@@ -7,41 +7,46 @@ int bmpManipuleitor(int argc, char* argv[])
     char* configFile = NULL;
 
     short int parameters[8] = {0};
-    short int flag = 0;
+    int flag = 0;
 
-    if (argc < 2) {
+    if (argc < 2)
+    {
         printf("Insufficient arguments. Usage: bmpManipuleitor <args>\n");
         return -1;
     }
-
 
     processCommandLine(argc, argv, parameters, imageFiles, &configFile, &flag);
 
     processFilterFile(configFile, 0, parameters, &flag);
 
-    printf("[%s]", imageFiles[0]);
-    printf("[%s]", imageFiles[1]);
-
     FILE* firstImage = fopen(imageFiles[0], "rb");
-
     if(!firstImage)
     {
-        printf("Unable to open file");
+        printf("Unable to open first file: (%s)\n", imageFiles[0]);
     }
 
-    FILE* secondImage = fopen(imageFiles[1], "rb");
+    FILE* secondImage = NULL;
 
-    if(!secondImage)
+    if(imageFiles[1] == NULL)
     {
-        printf("Unable to open file");
+        printf("No second file has been provided.\n");
+    }else
+    {
+        FILE* secondImage = fopen(imageFiles[1], "rb");
+        if(!secondImage)
+        {
+            printf("Unable to open second file: (%s)\n", imageFiles[1]);
+            fclose(firstImage);
+        }
     }
+
 
     generateImages(&flag, parameters, firstImage, secondImage, imageFiles[0]);
 
     return OK;
 }
 
-void generateImages(short int* flag, short int parameters[], FILE* firstImage, FILE* secondImage, char* filename)
+void generateImages(int* flag, short int parameters[], FILE* firstImage, FILE* secondImage, char* filename)
 {
     char* newImageName;
 
@@ -50,10 +55,12 @@ void generateImages(short int* flag, short int parameters[], FILE* firstImage, F
         printf("Red tone is enabled with parameter %hd\n", parameters[0]);
         newImageName = generateImageName("red-tone",  filename);
 
+        if(newImageName)
+            free(newImageName);
+
         printf("New filename is [%s]\n", newImageName);
         modifyImageTone(firstImage, newImageName, parameters[0], genChangeRedTone);
     }
-
 
     if (*flag & BLUE_TONE)
         printf("Blue tone is enabled with parameter %hd\n", parameters[1]);
@@ -88,6 +95,8 @@ void generateImages(short int* flag, short int parameters[], FILE* firstImage, F
         printf("Pixelate is enabled\n");
     if (*flag & BLUR)
         printf("Blur is enabled\n");
+
+    return;
 }
 
 void modificarDimensiones(FILE* image, int nuevoX, int nuevoY)
@@ -133,8 +142,9 @@ void writeHeader(FILE* image, FILE* newImage, t_header* ogHeader)
 
 int modifyImageTone(FILE* originalImage, char* newFilename, int parameter, ModifyPixel applyFilter)
 {
+    printf("New file created (%s)\n", newFilename);
     FILE* newImage = fopen(newFilename, "wb");
-    printf("New file created");
+
     if (!newImage)
     {
         printf("\nError creating image (%s)\n.", newFilename);
@@ -147,13 +157,12 @@ int modifyImageTone(FILE* originalImage, char* newFilename, int parameter, Modif
     printf("Image dimensions: %u x %u, Bit depth: %hu\n", header.ancho, header.alto, header.profundidad);
     writeHeader(originalImage, newImage, &header);
 
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(header.alto, header.ancho, sizeof(t_pixel));
+    t_pixel** newMatrix = (t_pixel**)initMatrix(header.alto, header.ancho, sizeof(t_pixel));
 
-    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), header.alto, header.ancho);
-    t_pixel** newMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), header.alto, header.ancho);
 
     matrixFromFile(header.alto, header.ancho, originalImage, originalMatrix);
 
-    /*
     for (int i = 0; i < header.alto; i++)
     {
         for (int j = 0; j < header.ancho; j++)
@@ -161,9 +170,9 @@ int modifyImageTone(FILE* originalImage, char* newFilename, int parameter, Modif
             newMatrix[i][j] = originalMatrix[i][j];
             applyFilter(&newMatrix[i][j], (float)parameter);
         }
-    }*/
+    }
 
-    // writeFile(newImage, newMatrix, header.alto, header.ancho);
+    writeFile(newImage, newMatrix, header.alto, header.ancho);
 
     destroyMatrix((void**)originalMatrix, header.alto);
     destroyMatrix((void**)newMatrix, header.alto);

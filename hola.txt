@@ -1,6 +1,0 @@
-flip-vertical
-flip-horizontal
-concat-vertical
-concat-horizontal
-pixelate
-blur

@@ -1,5 +1,4 @@
 #include "genericas.h"
-#include "estructuras.h"
 #include "constantes.h"
 
 // ----- FUNCIONES GENERICAS -----

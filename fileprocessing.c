@@ -1,7 +1,7 @@
 #include "fileprocessing.h"
 #include "utilities.h"
 
-void processFilterFile(const char* filename, short int* parameter, short int* parameters, short int* flag)
+void processFilterFile(const char* filename, short int* parameter, short int* parameters, int* flag)
 {
     if (filename == NULL)
     {
@@ -49,11 +49,14 @@ void writeFile(FILE* archivo, t_pixel** mat, size_t filas, size_t columnas)
 
 char* generateImageName(const char* filter,  char* fileName)
 {
-    char* nombreNuevoArchivo = malloc(strlen(filter) + 1 + strlen(fileName) + 1);
+    size_t len = strlen(filter) + 1 + strlen(fileName) + 1;
+    char* nombreNuevoArchivo = malloc(len);
     if (!nombreNuevoArchivo)
-    {
         return NULL;
-    }
+
+
+    nombreNuevoArchivo[0] = '\0';
+
 
     strcat(nombreNuevoArchivo, filter);
     strcat(nombreNuevoArchivo, "_");
@@ -61,3 +64,4 @@ char* generateImageName(const char* filter,  char* fileName)
 
     return nombreNuevoArchivo;
 }
+

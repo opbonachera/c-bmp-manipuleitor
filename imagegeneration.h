@@ -5,13 +5,15 @@
 #include <stdio.h>
 
 #include "constantes.h"
-#include "estructuras.h"
 #include "genericas.h"
+#include "utilities.h"
+#include "fileprocessing.h"
+#include "matrix.h"
 
 int  bmpManipuleitor(int argc, char* argv[]);
 int  readHeader(FILE* img, t_header* header);
 void modificarDimensiones(FILE* img, int nuevoX, int nuevoY);
-void generateImages(short int* flag, short int parameters[], FILE* firstImage, FILE* secondImage, char* filename);
+void generateImages(int* flag, short int parameters[], FILE* firstImage, FILE* secondImage, char* filename);
 void writeHeader(FILE* img, FILE* nueva, t_header* header);
 
 int modifyImageTone(FILE* ogImage, char* newFilename, int parametro, ModifyPixel aplicarFiltro);
