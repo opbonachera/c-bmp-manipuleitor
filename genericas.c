@@ -4,8 +4,8 @@
 // ----- FUNCIONES GENERICAS -----
 void genChangeRedTone(t_pixel* pixel, float intensidad)
 {
-    float multiplicador = 1 + (intensidad / 100);
-    pixel->pixel[2] = (pixel->pixel[2] * multiplicador) > 255 ? 255 : (unsigned char)(pixel->pixel[2] * multiplicador);
+    float resultado = pixel->pixel[2] * intensidad;
+    pixel->pixel[2] = (unsigned char)(resultado > 255 ? 255 : resultado);
 }
 
 void genChangeGreenTone(t_pixel* pixel, float intensidad)

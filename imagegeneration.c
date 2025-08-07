@@ -52,24 +52,45 @@ void generateImages(int* flag, short int parameters[], FILE* firstImage, FILE* s
 
     if (*flag & RED_TONE)
     {
-        printf("Red tone is enabled with parameter %hd\n", parameters[0]);
+        //printf("Red tone is enabled with parameter %hd\n", parameters[0]);
         newImageName = generateImageName("red-tone",  filename);
-
         if(newImageName)
             free(newImageName);
-
-        printf("New filename is [%s]\n", newImageName);
         modifyImageTone(firstImage, newImageName, parameters[0], genChangeRedTone);
     }
 
     if (*flag & BLUE_TONE)
-        printf("Blue tone is enabled with parameter %hd\n", parameters[1]);
+    {
+        newImageName = generateImageName("-blue-tone",  filename);
+        if(newImageName)
+            free(newImageName);
+        modifyImageTone(firstImage, newImageName, parameters[0], genChangeBlueTone);
+    }
+
     if (*flag & GREEN_TONE)
-        printf("Green tone is enabled with parameter %hd\n", parameters[2]);
+    {
+        newImageName = generateImageName("green-tone",  filename);
+        if(newImageName)
+            free(newImageName);
+        modifyImageTone(firstImage, newImageName, parameters[0], genChangeGreenTone);
+    }
+
     if (*flag & REDUCE_CONTRAST)
-        printf("Reduce contrast is enabled with parameter %hd\n", parameters[3]);
+    {
+        newImageName = generateImageName("low-contrast",  filename);
+        if(newImageName)
+            free(newImageName);
+        modifyImageTone(firstImage, newImageName, parameters[0], genReduceContrast);
+    }
+
     if (*flag & INCREASE_CONTRAST)
-        printf("Increase contrast is enabled with parameter %hd\n", parameters[4]);
+    {
+        newImageName = generateImageName("high-contrast",  filename);
+        if(newImageName)
+            free(newImageName);
+        modifyImageTone(firstImage, newImageName, parameters[0], genRaiseContrast);
+    }
+
     if (*flag & CROP)
         printf("Crop is enabled with parameter %hd\n", parameters[5]);
     if (*flag & SHRINK)
