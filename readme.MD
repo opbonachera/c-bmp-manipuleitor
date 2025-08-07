@@ -1,4 +1,4 @@
-# C Image Processing Tool — Second Semester 2024
+# C BMP Image Processing Tool
 
 This C program allows you to apply multiple image processing filters to BMP imagess.
 ## Features
