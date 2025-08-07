@@ -232,11 +232,11 @@
 
 1754489200 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\prototipos.h
 
-1754493715 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.c
+1754575164 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.c
 	"fileprocessing.h"
 	"utilities.h"
 
-1754489933 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.h
+1754575050 c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\fileprocessing.h
 	<stddef.h>
 	<stdio.h>
 	<stdlib.h>
@@ -247,7 +247,7 @@
 	"genericas.h"
 	"constantes.h"
 
-1754494241 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\imagegeneration.c
+1754574310 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\imagegeneration.c
 	"imagegeneration.h"
 
 1754489200 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\main.c
@@ -264,7 +264,7 @@
 	"stdio.h"
 	"constantes.h"
 
-1754492897 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\utilities.c
+1754574948 source:c:\users\leafnoise\documents\ornella\c-bmp-manipuleitor\utilities.c
 	"utilities.h"
 	"constantes.h"
 

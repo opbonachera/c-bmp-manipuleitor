@@ -47,21 +47,18 @@ void writeFile(FILE* archivo, t_pixel** mat, size_t filas, size_t columnas)
     }
 }
 
-char* generateImageName(const char* filter,  char* fileName)
+char* generateImageName(const char* filter, const char* fileName)
 {
-    size_t len = strlen(filter) + 1 + strlen(fileName) + 1;
+    const char* path = "out/";
+    size_t len = strlen(path) + 1 + strlen(filter) + 1 + strlen(fileName) + 1;
+
+
     char* nombreNuevoArchivo = malloc(len);
     if (!nombreNuevoArchivo)
         return NULL;
 
-
-    nombreNuevoArchivo[0] = '\0';
-
-
-    strcat(nombreNuevoArchivo, filter);
-    strcat(nombreNuevoArchivo, "_");
-    strcat(nombreNuevoArchivo, fileName);
-
+    snprintf(nombreNuevoArchivo, len, "%s%s_%s", path, filter, fileName);
     return nombreNuevoArchivo;
 }
+
 

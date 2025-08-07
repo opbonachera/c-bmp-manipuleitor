@@ -52,56 +52,92 @@ void generateImages(int* flag, short int parameters[], FILE* firstImage, FILE* s
 
     if (*flag & RED_TONE)
     {
-        //printf("Red tone is enabled with parameter %hd\n", parameters[0]);
-        newImageName = generateImageName("red-tone",  filename);
-        if(newImageName)
+        newImageName = generateImageName("red-tone", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genChangeRedTone);
             free(newImageName);
-        modifyImageTone(firstImage, newImageName, parameters[0], genChangeRedTone);
+        }
     }
 
     if (*flag & BLUE_TONE)
     {
-        newImageName = generateImageName("-blue-tone",  filename);
-        if(newImageName)
+        newImageName = generateImageName("blue-tone", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genChangeBlueTone);
             free(newImageName);
-        modifyImageTone(firstImage, newImageName, parameters[0], genChangeBlueTone);
+        }
     }
 
     if (*flag & GREEN_TONE)
     {
-        newImageName = generateImageName("green-tone",  filename);
-        if(newImageName)
+        newImageName = generateImageName("green-tone", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genChangeGreenTone);
             free(newImageName);
-        modifyImageTone(firstImage, newImageName, parameters[0], genChangeGreenTone);
-    }
-
-    if (*flag & REDUCE_CONTRAST)
-    {
-        newImageName = generateImageName("low-contrast",  filename);
-        if(newImageName)
-            free(newImageName);
-        modifyImageTone(firstImage, newImageName, parameters[0], genReduceContrast);
+        }
     }
 
     if (*flag & INCREASE_CONTRAST)
     {
-        newImageName = generateImageName("high-contrast",  filename);
-        if(newImageName)
+        newImageName = generateImageName("high-contrast", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genRaiseContrast);
             free(newImageName);
-        modifyImageTone(firstImage, newImageName, parameters[0], genRaiseContrast);
+        }
+    }
+
+    if (*flag & REDUCE_CONTRAST)
+    {
+        newImageName = generateImageName("low-contrast", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genReduceContrast);
+            free(newImageName);
+        }
     }
 
     if (*flag & CROP)
-        printf("Crop is enabled with parameter %hd\n", parameters[5]);
+    {
+        newImageName = generateImageName("cropped", filename);
+        if (newImageName)
+        {
+            cropImage(firstImage, newImageName, 90, genCropImage);
+            free(newImageName);
+        }
+    }
+
+
     if (*flag & SHRINK)
         printf("Shrink is enabled with parameter %hd\n", parameters[6]);
 
     if (*flag & GRAYSCALE)
-        printf("Grayscale is enabled\n");
+    {
+        newImageName = generateImageName("grayscale", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genGrayscale);
+            free(newImageName);
+        }
+    }
+
     if (*flag & NEGATIVE)
-        printf("Negative is enabled\n");
+    {
+        newImageName = generateImageName("negative", filename);
+        if (newImageName)
+        {
+            modifyImageTone(firstImage, newImageName, parameters[0], genNegative);
+            free(newImageName);
+        }
+    }
+
     if (*flag & ROTATE_LEFT)
-        printf("Rotate left is enabled\n");
+    {
+
+    }
     if (*flag & ROTATE_RIGHT)
         printf("Rotate right is enabled\n");
     if (*flag & FLIP_VERTICAL)
@@ -272,7 +308,6 @@ int mirrorImage(FILE* originalImage, char* newFilename, ModifyMatrix modifyMatri
 int cropImage(FILE* originalImage, char* newFilename, int parameter, ModifyMatrix modifyMatrix)
 {
     FILE* newImage;
-    int newWidth, newHeight;
     t_header originalHeader;
 
     newImage = fopen(newFilename, "wb");
@@ -281,31 +316,35 @@ int cropImage(FILE* originalImage, char* newFilename, int parameter, ModifyMatri
 
     readHeader(originalImage, &originalHeader);
 
-    newWidth = originalHeader.ancho * parameter / 100;
-    newHeight = originalHeader.alto * parameter / 100;
+    int originalWidth = originalHeader.ancho;
+    int originalHeight = originalHeader.alto;
+
+    int newWidth = originalWidth * parameter / 100;
+    int newHeight = originalHeight * parameter / 100;
+
+    t_pixel** originalMatrix = (t_pixel**)initMatrix(originalHeight, originalWidth, sizeof(t_pixel));
+    t_pixel** croppedMatrix = (t_pixel**)initMatrix(newHeight, newWidth, sizeof(t_pixel));
+
+    matrixFromFile(originalHeight, originalWidth, originalImage, originalMatrix);
+
+    modifyMatrix(originalMatrix, croppedMatrix, newHeight, newWidth);
+
 
     originalHeader.ancho = newWidth;
     originalHeader.alto = newHeight;
 
     writeHeader(originalImage, newImage, &originalHeader);
-
-    t_pixel** originalMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), originalHeader.alto * 100 / parameter, originalHeader.ancho * 100 / parameter);
-    t_pixel** croppedMatrix = (t_pixel**)initMatrix(sizeof(t_pixel), newHeight, newWidth);
-
-    matrixFromFile(originalHeader.alto * 100 / parameter, originalHeader.ancho * 100 / parameter, originalImage, originalMatrix);
-    modifyMatrix(originalMatrix, croppedMatrix, newHeight, newWidth);
-
     writeFile(newImage, croppedMatrix, newHeight, newWidth);
 
-    destroyMatrix((void**)originalMatrix, originalHeader.alto * 100 / parameter);
+    destroyMatrix((void**)originalMatrix, originalHeight);
     destroyMatrix((void**)croppedMatrix, newHeight);
 
     modificarDimensiones(newImage, newWidth, newHeight);
 
     fclose(newImage);
-
     return OK;
 }
+
 
 int shrinkImage(FILE* originalImage, char* newFilename, int parameter, ShrinkMatrix shrink)
 {
